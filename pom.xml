@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.suning.app</groupId>
+	<artifactId>mwwf-parent</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	
+	<name>工作流引擎</name>
+	<description>目标：实现统一流程控制</description>
+	<url>http://www.cnsuning.com</url>
+	
+	<properties>
+		<java.version>1.7</java.version>
+		<java.encoding>UTF-8</java.encoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<licenses>
+		<license>
+			<name><![CDATA[TODO]]></name>
+			<url><![CDATA[TODO]]></url>
+			<distribution><![CDATA[TODO]]></distribution>
+		</license>
+	</licenses>
+	
+	<scm>
+		<connection><![CDATA[TODO]]></connection>
+		<developerConnection><![CDATA[TODO]]></developerConnection>
+		<url><![CDATA[TODO]]></url>
+	</scm>
+	
+	<developers>
+		<developer>
+			<id>karry</id>
+			<name>陈帅</name>
+			<email>14080209@CNSUNING.COM</email>
+			<roles>
+				<role>architect</role>
+			</roles>
+			<organizationUrl>http://www.suning.com/</organizationUrl>
+			<properties>
+				<picUrl>http://www.ichenshuai.cn/blog/wp-content/uploads/2014/07/27.jpg</picUrl>
+			</properties>
+			<timezone>+8</timezone>
+		</developer>
+		<developer>
+			<id>wushp</id>
+			<name>吴圣平</name>
+			<email>14061798@CNSUNING.COM</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<organizationUrl>http://www.suning.com/</organizationUrl>
+			<properties>
+				<picUrl>http://www.wushengping.cn/images/me.png</picUrl>
+			</properties>
+			<timezone>+8</timezone>
+		</developer>
+	</developers>
+	<modules>
+		<module>mwwf-core</module>
+		<module>mwwf-dao</module>
+		<module>mwwf.common</module>
+		<module>mwwf.dao</module>
+		<module>mwwf.core</module>
+		<module>mwwf.api</module>
+	</modules>
+</project>
