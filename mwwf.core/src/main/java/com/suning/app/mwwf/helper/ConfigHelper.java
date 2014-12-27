@@ -1,4 +1,4 @@
-package com.suning.app.mwwf.core.helper;
+package com.suning.app.mwwf.helper;
 
 public class ConfigHelper {
     
