@@ -8,5 +8,14 @@ package com.suning.app.mwwf.model;
  */
 public class BaseModel {
 	
-	private 
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 }
