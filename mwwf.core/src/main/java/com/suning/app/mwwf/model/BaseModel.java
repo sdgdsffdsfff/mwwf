@@ -6,7 +6,7 @@ package com.suning.app.mwwf.model;
  * @author Administrator
  *
  */
-public class BaseModel {
+public abstract class BaseModel {
 	
 	private String name;
 
@@ -17,5 +17,4 @@ public class BaseModel {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 }

@@ -1,5 +1,5 @@
 package com.suning.app.mwwf.core;
 
-public class FlowService {
+public class FlowManager {
 
 }
