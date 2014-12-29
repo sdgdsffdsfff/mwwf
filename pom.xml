@@ -7,17 +7,18 @@
 	<artifactId>mwwf-parent</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
-	
+
 	<name>工作流引擎</name>
-	<description>目标：实现统一流程控制</description>
+	<description>实现统一流程控制</description>
 	<url>http://www.cnsuning.com</url>
-	
+
 	<properties>
 		<java.version>1.7</java.version>
 		<java.encoding>UTF-8</java.encoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<org.slf4j-version>1.6.1</org.slf4j-version>
 	</properties>
-	
+
 	<licenses>
 		<license>
 			<name><![CDATA[TODO]]></name>
@@ -25,13 +26,13 @@
 			<distribution><![CDATA[TODO]]></distribution>
 		</license>
 	</licenses>
-	
+
 	<scm>
 		<connection><![CDATA[TODO]]></connection>
 		<developerConnection><![CDATA[TODO]]></developerConnection>
 		<url><![CDATA[TODO]]></url>
 	</scm>
-	
+
 	<developers>
 		<developer>
 			<id>karry</id>
@@ -61,11 +62,32 @@
 		</developer>
 	</developers>
 	<modules>
-		<module>mwwf-core</module>
-		<module>mwwf-dao</module>
-		<module>mwwf.common</module>
-		<module>mwwf.dao</module>
 		<module>mwwf.core</module>
 		<module>mwwf.api</module>
+		<module>mwwf.spring</module>
 	</modules>
+	<dependencies>
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.5</version>
+		</dependency>
+	</dependencies>
 </project>

@@ -1,6 +1,6 @@
 package com.suning.app.mwwf.model;
 
-public abstract class BizDataModel<T> {
+public abstract class BizDataModel<T> extends BaseModel{
 	
     /**
      * 通过该方法取到业务数据
