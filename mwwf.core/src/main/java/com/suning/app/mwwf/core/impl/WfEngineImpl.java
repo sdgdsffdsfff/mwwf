@@ -1,6 +1,5 @@
 package com.suning.app.mwwf.core.impl;
 
-import com.suning.app.mwwf.core.AbstractDataManager;
 import com.suning.app.mwwf.core.FlowManager;
 import com.suning.app.mwwf.core.RouterManager;
 import com.suning.app.mwwf.core.WfEngine;
@@ -11,9 +10,6 @@ public class WfEngineImpl implements WfEngine {
 	private static FlowManager flowManager = FlowManager.getFlowManagerIns();
 
 	private static RouterManager routerManager = RouterManager.getRouterManagerIns();
-	
-	/* 依赖容器注入 */
-	protected static AbstractDataManager dataManager;
 
 	@Override
 	public boolean startFlowByInsId(String flowInstanceId) {
@@ -45,9 +41,5 @@ public class WfEngineImpl implements WfEngine {
 
 	public RouterManager rule() {
 		return routerManager;
-	}
-	
-	public AbstractDataManager dataManager() {
-		return dataManager;
 	}
 }
