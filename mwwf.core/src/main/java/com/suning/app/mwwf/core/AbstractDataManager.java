@@ -30,10 +30,6 @@ public abstract class AbstractDataManager {
 	/* 创建stage_info表 */
 	protected final static String CTEATE_STAGE_TABLE_SQL = "CreatStageInfoTable.sql";
 
-	public AbstractDataManager() {
-		creatStageInfoTable();
-	}
-
 	/**
 	 * 初始化流程引擎stage_info表
 	 */

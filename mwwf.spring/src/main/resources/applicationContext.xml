@@ -48,7 +48,7 @@
 	</bean>
 	
 	<bean class="com.suning.app.mwwf.spring.SpringWfEngine" id="engine">
-		<property name="dataManager" ref="dataManagerImpl"></property>
+		<property name="dataManagerImpl" ref="dataManagerImpl"></property>
 	</bean>
 	<bean id="dataManagerImpl" class="com.suning.app.mwwf.spring.DataManagerImpl">
 		<property name="sqlSession" ref="sqlSession"></property>
