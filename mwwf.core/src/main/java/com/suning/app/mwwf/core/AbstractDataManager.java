@@ -14,7 +14,7 @@ import com.suning.app.mwwf.model.BizDataModel;
  * 
  * <pre>
  * 		1.存放业务模型
- * 		2.
+ * 		2.存储，获取工作流数据
  * </pre>
  * 
  * @author 14061798 2014年12月27日 下午4:44:31
@@ -29,11 +29,6 @@ public abstract class AbstractDataManager {
 
 	/* 创建stage_info表 */
 	protected final static String CTEATE_STAGE_TABLE_SQL = "CreatStageInfoTable.sql";
-
-	/**
-	 * 初始化流程引擎stage_info表
-	 */
-	public abstract void creatStageInfoTable();
 
 	/**
 	 * 向bizDataContainer注册事件模型
@@ -63,5 +58,20 @@ public abstract class AbstractDataManager {
 		}
 		return bizDataContainer.get(bizDataModelName);
 	}
+	
+	/**
+	 * 初始化流程引擎stage_info表
+	 */
+	public abstract void creatStageInfoTable();
+	
+	/**
+	 * 更新流程引擎stage_info表
+	 */
+	public abstract int updateStageInfo();
+
+	/**
+	 * 插入流程引擎stage_info表
+	 */
+	public abstract int insertStageInfo();
 
 }
