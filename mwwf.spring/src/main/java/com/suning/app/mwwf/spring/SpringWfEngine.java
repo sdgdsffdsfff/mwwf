@@ -15,12 +15,11 @@ public class SpringWfEngine extends WfEngineImpl {
 	private static final Logger logger = LoggerFactory.getLogger(WfEngineImpl.class);
 	
 	@Autowired
-	private DataManagerImpl dataManagerImpl;
+	StageInfoDaoImpl stageInfoDaoImpl;
 
 	public void engineStart() {
 		FlowManager.init();
 		RouterManager.init();
-		dataManagerImpl.init();
 	}
 
 	@Override

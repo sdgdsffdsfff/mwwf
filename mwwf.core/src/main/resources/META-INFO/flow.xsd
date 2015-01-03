@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema
-	xmlns="http://www.suning.com/schema/services/flow" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	elementFormDefault="qualified" targetNamespace="http://www.suning.com/schema/services/flow">
-<xs:schema>
+<xsd:schema 
+	xmlns= "http://www.coderli.com/shurnim" xmlns:xsd= "http://www.w3.org/2001/XMLSchema"
+     targetNamespace="http://www.coderli.com/shurnim" elementFormDefault="qualified" >
+     <xsd:simpleType name ="IDType">
+           <xsd:restriction base ="xsd:string">
+               <xsd:pattern value= "[\w,\-,_]{1,32}"></xsd:pattern >
+           </xsd:restriction >
+     </xsd:simpleType >
+     <!-- 定义类型 -->
+     <xsd:complexType name ="jobType">
+           <xsd:sequence >
+               <xsd:element name ="jobId" type="IDType">
+                    <xsd:annotation >
+                         <xsd:documentation ><![CDATA[任务ID，唯一区别一个并行计算任务，必须唯一 ]]></xsd:documentation >
+                    </xsd:annotation >
+               </xsd:element >
+               <xsd:element name ="jobName" type= "xsd:string" minOccurs ="0">
+                    <xsd:annotation >
+                         <xsd:documentation ><![CDATA[任务名称，可选 ]]></xsd:documentation >
+                    </xsd:annotation >
+               </xsd:element >
+             </xsd:sequence >
+     </xsd:complexType >
+     <!-- 定义类型 -->
+     <xsd:complexType name ="jobBundleType">
+           <xsd:sequence >
+               <xsd:element name ="job" maxOccurs= "unbounded" type="jobType" >
+               </xsd:element >
+           </xsd:sequence >
+           <xsd:attribute name ="bundleName" type= "IDType"></xsd:attribute >
+     </xsd:complexType >
+
+
+     <xsd:element name ="jobBundle" type="jobBundleType">
+     </xsd:element >
+</xsd:schema>

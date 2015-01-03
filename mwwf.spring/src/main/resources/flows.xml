@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <flows xmlns="http://www.suning.com/schema/services/flow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.suning.com/schema/services/flow flow.xsd">
+	<flow name="" start="" end="">
+		<stage name="" toStage="">
+			<router/>
+			<router/>
+			<router/>
+		</stage>
+	</flow>
+</flows> -->
+<jobBundle bundleName= "sldfjlaksd" xmlns= "http://www.coderli.com/shurnim"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.coderli.com/shurnim pc-3.0.xsd">
+     <job>
+           <jobId>df-asd_asdf238-sdf_adf</jobId>
+           <distributorClassName></distributorClassName>
+     </job >
+     
+</jobBundle>
+

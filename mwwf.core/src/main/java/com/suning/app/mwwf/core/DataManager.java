@@ -19,16 +19,13 @@ import com.suning.app.mwwf.model.BizDataModel;
  * 
  * @author 14061798 2014年12月27日 下午4:44:31
  */
-public abstract class AbstractDataManager {
+public class DataManager {
 
-	private static final Logger logger = LoggerFactory.getLogger(AbstractDataManager.class);
+	private static final Logger logger = LoggerFactory.getLogger(DataManager.class);
 
 	/* 存放模型的容器 */
 	private static Map<String, BizDataModel<?>> bizDataContainer =
 			new ConcurrentHashMap<String, BizDataModel<?>>();
-
-	/* 创建stage_info表 */
-	protected final static String CTEATE_STAGE_TABLE_SQL = "CreatStageInfoTable.sql";
 
 	/**
 	 * 向bizDataContainer注册事件模型
@@ -58,20 +55,4 @@ public abstract class AbstractDataManager {
 		}
 		return bizDataContainer.get(bizDataModelName);
 	}
-	
-	/**
-	 * 初始化流程引擎stage_info表
-	 */
-	public abstract void creatStageInfoTable();
-	
-	/**
-	 * 更新流程引擎stage_info表
-	 */
-	public abstract int updateStageInfo();
-
-	/**
-	 * 插入流程引擎stage_info表
-	 */
-	public abstract int insertStageInfo();
-
 }

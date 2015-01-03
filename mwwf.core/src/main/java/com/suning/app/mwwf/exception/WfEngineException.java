@@ -1,4 +1,4 @@
-package com.suning.app.mwwf;
+package com.suning.app.mwwf.exception;
 
 public class WfEngineException extends RuntimeException {
 	/**

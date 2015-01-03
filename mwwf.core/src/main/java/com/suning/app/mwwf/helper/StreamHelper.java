@@ -2,7 +2,7 @@ package com.suning.app.mwwf.helper;
 
 import java.io.InputStream;
 
-import com.suning.app.mwwf.WfEngineException;
+import com.suning.app.mwwf.exception.WfEngineException;
 
 public class StreamHelper {
 	
