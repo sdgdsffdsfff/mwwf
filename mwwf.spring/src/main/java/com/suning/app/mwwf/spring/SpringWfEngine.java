@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.suning.app.mwwf.Entity.StageInfoEntity;
+import com.suning.app.mwwf.bean.StageBean;
 import com.suning.app.mwwf.core.FlowManager;
 import com.suning.app.mwwf.core.RouterManager;
 import com.suning.app.mwwf.core.impl.WfEngineImpl;
@@ -58,5 +59,20 @@ public class SpringWfEngine extends WfEngineImpl {
 	public boolean triggerByInsId(String flowInstanceId, BizDataModel<?> dataModel) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public static StageBean getFirstStageInfo(String flowName) {
+		return null;
+		
+	}
+	
+	public static StageBean toNextStage(String flowName) {
+		return null;
+		
+	}
+	
+	public static StageBean getCurrentStageInfo(String flowInstanceId) {
+		return null;
+		
 	}
 }

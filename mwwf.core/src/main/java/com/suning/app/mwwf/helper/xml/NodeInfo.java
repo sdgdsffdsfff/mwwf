@@ -35,6 +35,18 @@ public class NodeInfo<T> {
 		this.name = name;
 		this.parentName = parentName;
 	}
+	
+	/**
+	 * 构造函数
+	 * 
+	 * @param name 节点
+	 * @param parentName 父节点
+	 */
+	public NodeInfo(String name, String parentName,T nodeInfo) {
+		this.name = name;
+		this.parentName = parentName;
+		this.nodeInfo = nodeInfo;
+	}
 
 	public String getName() {
 		return name;
