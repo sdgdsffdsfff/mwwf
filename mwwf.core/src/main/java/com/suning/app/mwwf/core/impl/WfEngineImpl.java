@@ -1,12 +1,7 @@
 package com.suning.app.mwwf.core.impl;
 
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.suning.app.mwwf.core.FlowManager;
 import com.suning.app.mwwf.core.RouterManager;
-import com.suning.app.mwwf.core.WfEngine;
 import com.suning.app.mwwf.model.BizDataModel;
 
 public abstract class WfEngineImpl {

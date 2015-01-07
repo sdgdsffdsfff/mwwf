@@ -1,12 +1,16 @@
 package com.suning.app.mwwf.model;
 
-public abstract class BizDataModel<T> extends BaseModel{
-	
-    /**
-     * 通过该方法取到业务数据
-     *
-     * @return T 不同的条件会有不同的条件数据返回
-     */
-    public abstract T get(String flowInstanceId);
-    
+public abstract class BizDataModel<T> {
+
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	abstract T get(T param);
 }

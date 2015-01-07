@@ -1,12 +1,12 @@
 package com.suning.app.mwwf.Entity;
 
-import com.suning.app.mwwf.model.RouterModel;
+import com.suning.app.mwwf.bean.RouterBean;
 
 public class RouterEntity {
 	
-	private static RouterModel routerModel;
+	private static RouterBean routerModel;
 
-	public RouterModel getRouterModel() {
+	public RouterBean getRouterModel() {
 		return routerModel;
 	}
 	

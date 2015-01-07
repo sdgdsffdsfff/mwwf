@@ -1,42 +1,25 @@
 package com.suning.app.mwwf.Entity;
 
 import java.util.List;
+import java.util.Map;
 
-import com.suning.app.mwwf.model.BizDataModel;
-import com.suning.app.mwwf.model.EndModel;
-import com.suning.app.mwwf.model.StageModel;
-import com.suning.app.mwwf.model.StartModel;
+import com.suning.app.mwwf.bean.StageBean;
 
-public class FlowEntity<T> {
+public class FlowEntity {
 	
-	private StartModel startModel;
-	private EndModel endModel;
-	private List<StageModel> stageModelList;
-	private BizDataModel<T> bizDataModel;
+	private String name;
+	private Map<String,List<StageBean>> stageBeanMap;
 	
-	public StartModel getStartModel() {
-		return startModel;
+	public String getName() {
+		return name;
 	}
-	public void setStartModel(StartModel startModel) {
-		this.startModel = startModel;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public EndModel getEndModel() {
-		return endModel;
+	public Map<String,List<StageBean>> getStageBeanMap() {
+		return stageBeanMap;
 	}
-	public void setEndModel(EndModel endModel) {
-		this.endModel = endModel;
+	public void setStageBeanMap(Map<String,List<StageBean>> stageBeanMap) {
+		this.stageBeanMap = stageBeanMap;
 	}
-	public List<StageModel> getStageModelList() {
-		return stageModelList;
-	}
-	public void setStageModelList(List<StageModel> stageModelList) {
-		this.stageModelList = stageModelList;
-	}
-	public BizDataModel<T> getBizDataModel() {
-		return bizDataModel;
-	}
-	public void setBizDataModel(BizDataModel<T> bizDataModel) {
-		this.bizDataModel = bizDataModel;
-	}
-	
 }

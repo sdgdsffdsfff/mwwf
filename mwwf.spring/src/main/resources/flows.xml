@@ -2,11 +2,13 @@
 <flows xmlns="http://www.suning.com/schema/services/flow"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.suning.com/schema/services/flow flow.xsd">
-	<flow name="" start="" end="">
-		<stage name="" toStage="">
-			<router/>
-			<router/>
-			<router/>
+	<flow name="kafka">
+		<stage name="firstStage">
+			<router name="A" eventName="B" toStage="secondStage"/>
 		</stage>
+		<stage name="secondStage">
+			<router name="A" eventName="B" toStage="endStage"/>
+		</stage>
+		<stage name="endStage"/>
 	</flow>
 </flows>

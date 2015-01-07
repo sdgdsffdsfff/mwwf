@@ -1,4 +1,4 @@
-package com.suning.app.mwwf.model;
+package com.suning.app.mwwf.bean;
 
 /**
  * 
@@ -6,7 +6,7 @@ package com.suning.app.mwwf.model;
  * @author Administrator
  *
  */
-public abstract class BaseModel {
+public abstract class BaseBean {
 	
 	private String name;
 
