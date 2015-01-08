@@ -6,8 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.suning.app.mwwf.Entity.StageInfoEntity;
 import com.suning.app.mwwf.dao.StageInfoDao;
+import com.suning.app.mwwf.entity.StageInfoEntity;
 
 @Repository
 public class StageInfoDaoImpl implements StageInfoDao {

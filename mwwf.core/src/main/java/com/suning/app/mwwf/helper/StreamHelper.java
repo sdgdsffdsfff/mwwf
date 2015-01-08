@@ -6,7 +6,6 @@ import java.io.InputStream;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import javax.xml.stream.XMLInputFactory;
 
 import org.xml.sax.SAXException;
 
@@ -14,9 +13,6 @@ import com.suning.app.mwwf.exception.WfEngineException;
 import com.suning.app.mwwf.helper.xml.FlowSaxHandler;
 
 public class StreamHelper {
-
-	/* xml解析的实例 */
-	private static final XMLInputFactory INPUT_FACTORY = XMLInputFactory.newInstance();
 
 	/**
 	 * 从当前环境或者jar下加载资源
@@ -39,7 +35,9 @@ public class StreamHelper {
 	}
 
 	/**
-	 * @param name
+	 * 解析flow的xml文件
+	 * 
+	 * @param resourceName 资源名
 	 */
 	public static void parseFlowXml(String resourceName) {
 		

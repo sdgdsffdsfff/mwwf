@@ -1,4 +1,4 @@
-package com.suning.app.mwwf.Entity;
+package com.suning.app.mwwf.entity;
 
 import java.io.Serializable;
 
@@ -8,7 +8,7 @@ public class StageInfoEntity implements Serializable {
 	private static final long serialVersionUID = -9167386485948162334L;
 
 	/* 自增id */
-	private Integer insId;
+	private Integer id;
 
 	/* 流程实例id */
 	private String flowInsId;
@@ -31,12 +31,12 @@ public class StageInfoEntity implements Serializable {
 	/* 流程节点有效性 1：有效 2.无效 */
 	private String del;
 
-	public Integer getInsId() {
-		return insId;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setInsId(Integer insId) {
-		this.insId = insId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getFlowInsId() {

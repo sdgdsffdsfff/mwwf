@@ -1,4 +1,4 @@
-package com.suning.app.mwwf.Entity;
+package com.suning.app.mwwf.entity;
 
 import com.suning.app.mwwf.bean.RouterBean;
 

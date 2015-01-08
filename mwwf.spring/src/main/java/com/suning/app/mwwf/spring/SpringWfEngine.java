@@ -7,11 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.suning.app.mwwf.Entity.StageInfoEntity;
 import com.suning.app.mwwf.bean.StageBean;
+import com.suning.app.mwwf.constant.Constant;
 import com.suning.app.mwwf.core.FlowManager;
 import com.suning.app.mwwf.core.RouterManager;
 import com.suning.app.mwwf.core.impl.WfEngineImpl;
+import com.suning.app.mwwf.entity.StageInfoEntity;
+import com.suning.app.mwwf.enums.StageStatusEnum;
 import com.suning.app.mwwf.model.BizDataModel;
 
 public class SpringWfEngine extends WfEngineImpl {
@@ -32,7 +34,7 @@ public class SpringWfEngine extends WfEngineImpl {
 		// 验证连接可用性
 		if(stageInfoDaoImpl == null) {
 			logger.error("连接数据库失败!");
-			throw new NullPointerException();
+			return false;
 		}
 		
 		// 参数数验证
@@ -44,24 +46,36 @@ public class SpringWfEngine extends WfEngineImpl {
 		// 验证是否已经启动了流程实例
 		List<StageInfoEntity> stageInfoList = stageInfoDaoImpl.selectStageInfo(flowInstanceId);
 		if(stageInfoList != null && !stageInfoList.isEmpty()) {
-			logger.error("该流程实例已经存在,流程实例id:{}", flowInstanceId);
+			logger.error("流程实例已经存在,流程实例id:{}", flowInstanceId);
 			return false;
 		}
 		
 		// 插入节点信息
-		//Integer affectRows = stageInfoDaoImpl.insertStageInfo(stageInfoEntity);
+		StageInfoEntity stageInfo = new StageInfoEntity();
+		stageInfo.setFlowId(flowInstanceId);
+		stageInfo.setFlowName(flowInstanceName);
+		stageInfo.setStageName(Constant.START_STAGE);
+		stageInfo.setStageStatus(StageStatusEnum.RUNNING.toString());
+		Integer affectRows = stageInfoDaoImpl.insertStageInfo(stageInfo);
+		if(affectRows != Constant.NUM_1) {
+			logger.error("流程实例存储失败,流程实例id:{}", flowInstanceId);
+			return false;
+		}
 		
-		
-		return false;
+		logger.info("流程实例成功启动,流程实例id:{}", flowInstanceId);
+		return true;
 	}
 
 	@Override
-	public boolean triggerByInsId(String flowInstanceId, BizDataModel<?> dataModel) {
+	public boolean triggerByInsId(String flowInstanceId, String dataNameKey) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 	
 	public static StageBean getFirstStageInfo(String flowName) {
+		
+		
+		
 		return null;
 		
 	}

@@ -2,9 +2,7 @@ package com.suning.app.mwwf.core;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.suning.app.mwwf.bean.StageBean;
 import com.suning.app.mwwf.helper.StreamHelper;
-import com.suning.app.mwwf.helper.xml.DomTree;
 import com.suning.app.mwwf.helper.xml.NodeInfo;
 
 public class FlowManager {
@@ -17,10 +15,6 @@ public class FlowManager {
 
 	public static void init() {
 		StreamHelper.parseFlowXml("flows.xml");
-
-		DomTree tree = new DomTree();
-
-		System.out.println(tree.iteratorTree(tree.createTree(flowXmlEnity).getRoot()));
 	}
 
 	public static FlowManager getFlowManagerIns() {
