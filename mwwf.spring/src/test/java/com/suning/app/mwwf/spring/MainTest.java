@@ -13,6 +13,5 @@ public class MainTest {
 		String paths[] = {"applicationContext.xml","applicationContext-wfengine.xml"};
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(paths);
 		SpringWfEngine a = (SpringWfEngine)ctx.getBean("engine");
-		a.engineStart();
 	}
 }

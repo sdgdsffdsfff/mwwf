@@ -11,19 +11,20 @@ import com.suning.app.mwwf.bean.StageBean;
 import com.suning.app.mwwf.constant.Constant;
 import com.suning.app.mwwf.core.FlowManager;
 import com.suning.app.mwwf.core.RouterManager;
-import com.suning.app.mwwf.core.impl.WfEngineImpl;
+import com.suning.app.mwwf.core.impl.AbstractWfEngine;
 import com.suning.app.mwwf.entity.StageInfoEntity;
 import com.suning.app.mwwf.enums.StageStatusEnum;
-import com.suning.app.mwwf.model.BizDataModel;
 
-public class SpringWfEngine extends WfEngineImpl {
+public class SpringWfEngine extends AbstractWfEngine {
 
-	private static final Logger logger = LoggerFactory.getLogger(WfEngineImpl.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(AbstractWfEngine.class);
+	static {
+		engineStart();
+	}
 	@Autowired
 	StageInfoDaoImpl stageInfoDaoImpl;
 
-	public void engineStart() {
+	public static void engineStart() {
 		FlowManager.init();
 		RouterManager.init();
 	}
@@ -67,7 +68,7 @@ public class SpringWfEngine extends WfEngineImpl {
 	}
 
 	@Override
-	public boolean triggerByInsId(String flowInstanceId, String dataNameKey) {
+	public boolean triggerByInsId(String flowInstanceId, String dataName,boolean isSync) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -7,8 +7,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.suning.app.mwwf.model.BizDataModel;
-
 /**
  * 数据管理中心,有以下功能
  * 
@@ -24,15 +22,15 @@ public class DataManager {
 	private static final Logger logger = LoggerFactory.getLogger(DataManager.class);
 
 	/* 存放模型的容器 */
-	private static Map<String, BizDataModel<?>> bizDataContainer =
-			new ConcurrentHashMap<String, BizDataModel<?>>();
+	private static Map<String, BizDataAbstract<?>> bizDataContainer =
+			new ConcurrentHashMap<String, BizDataAbstract<?>>();
 
 	/**
 	 * 向bizDataContainer注册事件模型
 	 * 
 	 * @param bizDataModel 业务模型
 	 */
-	public static void register(BizDataModel<?> bizDataModel) {
+	public static void register(BizDataAbstract<?> bizDataModel) {
 
 		if (bizDataContainer.containsKey(bizDataModel.getName())) {
 			logger.warn("模型已经存在：" + bizDataModel.getName());
@@ -47,7 +45,7 @@ public class DataManager {
 	 * @param bizDataModelName 业务模型名
 	 * @return 业务模型
 	 */
-	public static BizDataModel<?> getConditionData(String bizDataModelName) {
+	public static BizDataAbstract<?> getConditionData(String bizDataModelName) {
 
 		if (StringUtils.isBlank(bizDataModelName)) {
 			logger.error("模型名称为空");

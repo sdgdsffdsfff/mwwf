@@ -167,6 +167,13 @@
 			<version>1.3</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.suning.app</groupId>
+			<artifactId>mwbops.biz.common</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/mwbops.biz.common-1.0-SNAPSHOT.jar</systemPath>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

@@ -1,7 +1,11 @@
-package com.suning.app.mwwf.model;
+package com.suning.app.mwwf.core;
 
-public abstract class BizDataModel<T> {
+public abstract class BizDataAbstract<T> {
 
+	public BizDataAbstract() {
+		DataManager.register(this);
+	}
+	
 	private String name;
 
 	public String getName() {

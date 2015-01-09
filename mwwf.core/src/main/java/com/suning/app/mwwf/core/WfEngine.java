@@ -1,6 +1,5 @@
 package com.suning.app.mwwf.core;
 
-import com.suning.app.mwwf.model.BizDataModel;
 
 public interface WfEngine {
 
@@ -20,7 +19,7 @@ public interface WfEngine {
 	 * @param dataModel 业务模型
 	 * @return boolean 是否启动成功
 	 */
-	boolean triggerByInsId(String flowInstanceId, BizDataModel<?> dataModel);
+	boolean triggerByInsId(String flowInstanceId, BizDataAbstract<?> dataModel);
 
 	/**
 	 * 根据流程名称启动流程实例
@@ -29,5 +28,5 @@ public interface WfEngine {
 	 * @param dataModel 业务模型
 	 * @return boolean 是否启动成功
 	 */
-	boolean triggerByInsName(String flowInstanceName, BizDataModel<?> dataModel);
+	boolean triggerByInsName(String flowInstanceName, BizDataAbstract<?> dataModel);
 }

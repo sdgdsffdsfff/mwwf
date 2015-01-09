@@ -9,6 +9,10 @@ public class FlowManager {
 
 	private static CopyOnWriteArrayList<NodeInfo<?>> flowXmlEnity = new CopyOnWriteArrayList<NodeInfo<?>>();
 
+	static {
+		init();
+	}
+	
 	public static CopyOnWriteArrayList<NodeInfo<?>> getFlowXmlEnity() {
 		return flowXmlEnity;
 	}
