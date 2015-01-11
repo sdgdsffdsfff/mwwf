@@ -22,7 +22,7 @@ public class RouterManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(DataManager.class);
 
-	private static final String RULE_EXPRESSION_FILE = "auth_rule.properties";
+	private static final String RULE_EXPRESSION_FILE = "rules.properties";
 	private static final String CD_SEPARATOR = ",";
 	private static final String EXPRESSION_START_MARK = "expression=";
 	private static final String EXPRESSION_END_MARK = "#end";
