@@ -7,13 +7,18 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
+import com.suning.app.mwwf.core.DataManager;
 import com.suning.app.mwwf.exception.WfEngineException;
 import com.suning.app.mwwf.helper.xml.FlowSaxHandler;
 
 public class StreamHelper {
 
+	private static final Logger logger = LoggerFactory.getLogger(StreamHelper.class);
+	
 	/**
 	 * 从当前环境或者jar下加载资源
 	 * 
@@ -54,7 +59,7 @@ public class StreamHelper {
 			parser.parse(flowIs, new FlowSaxHandler());
 			
 		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
+			logger.error("配置出错", e);
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

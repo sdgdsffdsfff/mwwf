@@ -47,8 +47,8 @@ public class SpringWfEngine extends AbstractWfEngine {
 		}
 
 		// 验证是否已经启动了流程实例
-		List<StageInfoEntity> stageInfoList = stageInfoDaoImpl.selectStageInfo(flowInsId);
-		if (stageInfoList != null && !stageInfoList.isEmpty()) {
+		StageInfoEntity stageInfoList = stageInfoDaoImpl.selectStageInfo(flowInsId);
+		if (stageInfoList != null ) {
 			logger.error("流程实例已经存在,流程实例id:{}", flowInsId);
 			return false;
 		}

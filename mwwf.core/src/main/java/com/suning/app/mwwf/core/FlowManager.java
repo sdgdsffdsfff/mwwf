@@ -18,13 +18,13 @@ public class FlowManager {
 	static {
 		init();
 	}
-	
-	public static CopyOnWriteArrayList<NodeInfo<?>> getFlowXmlEnity() {
-		return flowXmlEnity;
-	}
 
 	public static void init() {
 		StreamHelper.parseFlowXml("flows.xml");
+	}
+
+	public static CopyOnWriteArrayList<NodeInfo<?>> getFlowXmlEnity() {
+		return flowXmlEnity;
 	}
 
 	/**
