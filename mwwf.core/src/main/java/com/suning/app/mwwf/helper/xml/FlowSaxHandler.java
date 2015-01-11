@@ -4,9 +4,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.suning.app.mwwf.bean.FlowBean;
-import com.suning.app.mwwf.bean.RouterBean;
-import com.suning.app.mwwf.bean.StageBean;
+import com.suning.app.mwwf.bean.FlowInfoBean;
+import com.suning.app.mwwf.bean.RouterInfoBean;
+import com.suning.app.mwwf.bean.StageInfoBean;
 import com.suning.app.mwwf.core.FlowManager;
 
 public class FlowSaxHandler extends DefaultHandler {
@@ -21,9 +21,9 @@ public class FlowSaxHandler extends DefaultHandler {
 	private static final String ATTRIBUTE_EVENTNAME = "eventName";
 	private static final String ATTRIBUTE_TOSTAGE = "toStage";
 	
-	private FlowBean flowBean = new FlowBean();
-	private RouterBean routerBean = new RouterBean();
-	private StageBean stageBean = new StageBean();
+	private FlowInfoBean flowBean = new FlowInfoBean();
+	private RouterInfoBean routerBean = new RouterInfoBean();
+	private StageInfoBean stageBean = new StageInfoBean();
 	
 	@Override
     public void startDocument() throws SAXException {
@@ -42,14 +42,14 @@ public class FlowSaxHandler extends DefaultHandler {
         if (ELEMENT_FLOW.equals(name)) {
         	flowBean.setName(attr.getValue(ATTRIBUTE_NAME));
         	flowBean.setAutoTrigger(attr.getValue(ATTRIBUTE_AUTO_TRIGGER));
-        	NodeInfo<FlowBean> flowNode = new NodeInfo<FlowBean>(attr.getValue(ATTRIBUTE_NAME),ELEMENT_ROOT,flowBean);
+        	NodeInfo<FlowInfoBean> flowNode = new NodeInfo<FlowInfoBean>(attr.getValue(ATTRIBUTE_NAME),ELEMENT_ROOT,flowBean);
         	FlowManager.getFlowXmlEnity().add(flowNode);
         }
         
         // 获取节点信息
         if (ELEMENT_STAGE.equals(name)) {
         	stageBean.setName(attr.getValue(ATTRIBUTE_NAME));
-        	NodeInfo<StageBean> stageNode = new NodeInfo<StageBean>(attr.getValue(ATTRIBUTE_NAME),flowBean.getName(),stageBean);
+        	NodeInfo<StageInfoBean> stageNode = new NodeInfo<StageInfoBean>(attr.getValue(ATTRIBUTE_NAME),flowBean.getName(),stageBean);
         	FlowManager.getFlowXmlEnity().add(stageNode);
         }
         
@@ -58,7 +58,7 @@ public class FlowSaxHandler extends DefaultHandler {
         	routerBean.setName(attr.getValue(ATTRIBUTE_NAME));
         	routerBean.setEventName(attr.getValue(ATTRIBUTE_EVENTNAME));
         	routerBean.setToStage(attr.getValue(ATTRIBUTE_TOSTAGE));
-        	NodeInfo<RouterBean> routerNode = new NodeInfo<RouterBean>(attr.getValue(ATTRIBUTE_NAME),stageBean.getName(),routerBean);
+        	NodeInfo<RouterInfoBean> routerNode = new NodeInfo<RouterInfoBean>(attr.getValue(ATTRIBUTE_NAME),stageBean.getName(),routerBean);
         	FlowManager.getFlowXmlEnity().add(routerNode);
         }
 
@@ -68,13 +68,13 @@ public class FlowSaxHandler extends DefaultHandler {
     public void endElement(String uri, String localName, String name)
             throws SAXException {
         if (ELEMENT_FLOW.equals(name)) {
-        	flowBean = new FlowBean();
+        	flowBean = new FlowInfoBean();
         }
         if (ELEMENT_STAGE.equals(name)) {
-        	stageBean = new StageBean();
+        	stageBean = new StageInfoBean();
         }
         if (ELEMENT_ROUTER.equals(name)) {
-        	routerBean = new RouterBean();
+        	routerBean = new RouterInfoBean();
         }
     }
 }

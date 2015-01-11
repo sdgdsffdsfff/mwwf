@@ -1,6 +1,6 @@
 package com.suning.app.mwwf.bean;
 
-public class RouterBean extends BaseBean {
+public class RouterInfoBean extends BaseBean {
 
 	private String eventName;
 

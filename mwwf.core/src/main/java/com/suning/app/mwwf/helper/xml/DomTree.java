@@ -2,9 +2,9 @@ package com.suning.app.mwwf.helper.xml;
 
 import java.util.List;
 
-import com.suning.app.mwwf.bean.FlowBean;
-import com.suning.app.mwwf.bean.RouterBean;
-import com.suning.app.mwwf.bean.StageBean;
+import com.suning.app.mwwf.bean.FlowInfoBean;
+import com.suning.app.mwwf.bean.RouterInfoBean;
+import com.suning.app.mwwf.bean.StageInfoBean;
 import com.suning.app.mwwf.core.FlowManager;
 import com.suning.app.mwwf.helper.PrintHelper;
 
@@ -29,11 +29,11 @@ public class DomTree {
 	 * @param currentNodeInfo
 	 */
 	private static void print(NodeInfo<?> currentNodeInfo) {
-		if (currentNodeInfo.getNodeInfo() instanceof FlowBean) {
+		if (currentNodeInfo.getNodeInfo() instanceof FlowInfoBean) {
 			PrintHelper.print(currentNodeInfo.getName(), 1);
-		} else if (currentNodeInfo.getNodeInfo() instanceof RouterBean) {
+		} else if (currentNodeInfo.getNodeInfo() instanceof RouterInfoBean) {
 			PrintHelper.print(currentNodeInfo.getName(), 3);
-		} else if (currentNodeInfo.getNodeInfo() instanceof StageBean) {
+		} else if (currentNodeInfo.getNodeInfo() instanceof StageInfoBean) {
 			PrintHelper.print(currentNodeInfo.getName(), 2);
 		} else {
 			PrintHelper.print(currentNodeInfo.getName(), 0);

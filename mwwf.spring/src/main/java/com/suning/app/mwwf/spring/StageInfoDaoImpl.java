@@ -16,9 +16,9 @@ public class StageInfoDaoImpl implements StageInfoDao {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-    public Integer updateStageInfo() {
+    public Integer updateStageInfo(StageInfoEntity stageInfoEntity) {
 		StageInfoDao stageInfoDao = sqlSession.getMapper(StageInfoDao.class);
-	    return stageInfoDao.updateStageInfo();
+	    return stageInfoDao.updateStageInfo(stageInfoEntity);
     }
 
 	@Override
@@ -28,7 +28,7 @@ public class StageInfoDaoImpl implements StageInfoDao {
     }
 	
 	@Override
-	public List<StageInfoEntity> selectStageInfo(String flowInsId) {
+	public StageInfoEntity selectStageInfo(String flowInsId) {
 		StageInfoDao stageInfoDao = sqlSession.getMapper(StageInfoDao.class);
 		return stageInfoDao.selectStageInfo(flowInsId);
 	}

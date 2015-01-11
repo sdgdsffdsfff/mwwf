@@ -1,6 +1,6 @@
 package com.suning.app.mwwf.bean;
 
-public class FlowBean extends BaseBean{
+public class FlowInfoBean extends BaseBean{
 	
 	private String autoTrigger;
 

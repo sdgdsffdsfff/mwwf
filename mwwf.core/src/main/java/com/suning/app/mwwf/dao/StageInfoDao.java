@@ -14,7 +14,7 @@ public interface StageInfoDao {
 	 * 更新流程引擎stage_info表
 	 */
 	@Update("UPDATE `mwwf`.`stage_info` SET `id`=NULL, `flowId`=NULL, `flowName`=NULL, `stageName`=NULL, `stageStatus`=NULL, `createTime`=NULL, `updateTime`=NULL, `del`=NULL WHERE (ISNULL(`id`));")
-	public Integer updateStageInfo();
+	public Integer updateStageInfo(StageInfoEntity stageInfoEntity);
 
 	/**
 	 * 插入流程引擎stage_info表
@@ -25,7 +25,7 @@ public interface StageInfoDao {
 	/**
 	 * 查询流程引擎stage_info表
 	 */
-	@Select("SELECT * FROM `stage_info` WHERE flowId = #{flowId}")
-	public List<StageInfoEntity> selectStageInfo(String flowInsId);
+	@Select("SELECT * FROM `stage_info` WHERE flowId = #{flowId} ORDER BY DESC LIMIT 1")
+	public StageInfoEntity selectStageInfo(String flowInsId);
 	
 }
