@@ -1,11 +1,15 @@
 package com.suning.app.mwwf.core;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.suning.app.mwwf.exception.WfEngineException;
 
 /**
  * 数据管理中心,有以下功能
@@ -45,12 +49,23 @@ public class DataManager {
 	 * @param bizDataModelName 业务模型名
 	 * @return 业务模型
 	 */
-	public static BizDataAbstract<?> getConditionData(String bizDataModelName) {
+	public static List<BizDataAbstract<?>> getConditionData(List<String> bizDataModelName) {
 
-		if (StringUtils.isBlank(bizDataModelName)) {
+		if (CollectionUtils.isEmpty(bizDataModelName)) {
 			logger.error("模型名称为空");
 			return null;
 		}
-		return bizDataContainer.get(bizDataModelName);
+		
+		List<BizDataAbstract<?>> bizData = new ArrayList<BizDataAbstract<?>>();
+		
+		for (String dataName : bizDataModelName) {
+			BizDataAbstract<?> bizDataItem = bizDataContainer.get(dataName);
+			if(bizDataItem == null) {
+				throw new WfEngineException("不存在业务数据,业务名为：" + dataName);
+			}
+			bizData.add(bizDataItem);
+		}
+		
+		return bizData;
 	}
 }

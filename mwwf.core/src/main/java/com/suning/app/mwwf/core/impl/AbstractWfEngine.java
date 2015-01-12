@@ -1,13 +1,13 @@
 package com.suning.app.mwwf.core.impl;
 
 import com.suning.app.mwwf.core.FlowManager;
-import com.suning.app.mwwf.core.RouterManager;
+import com.suning.app.mwwf.core.RulesManager;
 
 public abstract class AbstractWfEngine {
 
 	private static FlowManager flowManager = FlowManager.getFlowManagerIns();
 
-	private static RouterManager routerManager = RouterManager.getRouterManagerIns();
+	private static RulesManager routerManager = RulesManager.getRouterManagerIns();
 
 	public abstract boolean startFlowInstance(String flowInstanceId, String flowName);
 
@@ -32,7 +32,7 @@ public abstract class AbstractWfEngine {
 		return flowManager;
 	}
 
-	public RouterManager rule() {
+	public RulesManager rule() {
 		return routerManager;
 	}
 }

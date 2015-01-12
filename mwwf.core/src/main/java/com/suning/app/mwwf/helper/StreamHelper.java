@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
-import com.suning.app.mwwf.core.DataManager;
 import com.suning.app.mwwf.exception.WfEngineException;
 import com.suning.app.mwwf.helper.xml.FlowSaxHandler;
 
@@ -20,7 +19,7 @@ public class StreamHelper {
 	private static final Logger logger = LoggerFactory.getLogger(StreamHelper.class);
 	
 	/**
-	 * 从当前环境或者jar下加载资源
+	 * 从当前环境或者当前线程下加载资源
 	 * 
 	 * @param resourceName 资源的名称
 	 * @return 资源的流

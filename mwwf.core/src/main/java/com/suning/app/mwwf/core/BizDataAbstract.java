@@ -16,5 +16,5 @@ public abstract class BizDataAbstract<T> {
 		this.name = name;
 	}
 
-	abstract T get(T param);
+	public abstract T get(String flowInsId);
 }

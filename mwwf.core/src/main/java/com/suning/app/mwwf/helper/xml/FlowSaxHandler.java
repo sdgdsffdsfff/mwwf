@@ -49,6 +49,7 @@ public class FlowSaxHandler extends DefaultHandler {
         // 获取节点信息
         if (ELEMENT_STAGE.equals(name)) {
         	stageBean.setName(attr.getValue(ATTRIBUTE_NAME));
+        	stageBean.setToStage(attr.getValue(ATTRIBUTE_TOSTAGE));
         	NodeInfo<StageInfoBean> stageNode = new NodeInfo<StageInfoBean>(attr.getValue(ATTRIBUTE_NAME),flowBean.getName(),stageBean);
         	FlowManager.getFlowXmlEnity().add(stageNode);
         }
