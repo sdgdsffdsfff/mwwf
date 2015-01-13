@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.suning.app.mwwf.bean.RouterInfoBean;
-import com.suning.app.mwwf.bean.RuleBean;
 import com.suning.app.mwwf.bean.StageInfoBean;
 import com.suning.app.mwwf.constant.Constant;
 import com.suning.app.mwwf.core.FlowManager;
@@ -23,12 +22,24 @@ public class SpringWfEngine extends AbstractWfEngine {
 
 	private static final Logger logger = LoggerFactory.getLogger(AbstractWfEngine.class);
 
+	/* 节点结束标识符 */
+	private static final String END_STAGE = "endStage";
+
+	/* 节点状态:结束 */
+	private static final String STAGE_STATUS_END = "END";
+
+	/* 节点状态:运行 */
+	private static final String STAGE_STATUS_RUNNING = "RUNNING";
+
 	static {
 		engineStart();
 	}
 
 	@Autowired
-	StageInfoDaoImpl stageInfoDaoImpl;
+	private StageInfoDaoImpl stageInfoDaoImpl;
+
+	//@Autowired
+	//BaseEvent baseEvent;
 
 	public static void engineStart() {
 		FlowManager.init();
@@ -59,7 +70,7 @@ public class SpringWfEngine extends AbstractWfEngine {
 
 		// 插入节点信息
 		StageInfoEntity stageInfo = new StageInfoEntity();
-		stageInfo.setFlowId(flowInsId);
+		stageInfo.setFlowInsId(flowInsId);
 		stageInfo.setFlowName(flowInsName);
 		stageInfo.setStageName(Constant.START_STAGE);
 		stageInfo.setStageStatus(String.valueOf(StageStatusEnum.RUNNING));
@@ -75,58 +86,112 @@ public class SpringWfEngine extends AbstractWfEngine {
 
 	@Override
 	public boolean triggerByInsId(String flowInsId, String dataName, boolean isSync) {
-		// TODO Auto-generated method stub
-		return false;
+		if (StringUtils.isEmpty(flowInsId) || StringUtils.isEmpty(dataName)) {
+			logger.error("触发流程失败,参数不能为空,流程实例id:{},业务名:{}", flowInsId, dataName);
+			return false;
+		}
+		driveStage(flowInsId, dataName, isSync);
+		return true;
 	}
 
-	private void driveStage(String flowInsId, String datalName) {
+	private void driveStage(String flowInsId, String datalName, boolean isSync) {
 
-		if (StringUtils.isBlank(flowInsId) || StringUtils.isBlank(datalName)) {
-			logger.error("参数不能为空,flowInsId:{},datalName:{}", flowInsId, datalName);
-			return;
+		try {
+			if (StringUtils.isBlank(flowInsId) || StringUtils.isBlank(datalName)) {
+				logger.error("参数不能为空,flowInsId:{},datalName:{}", flowInsId, datalName);
+				return;
+			}
+
+			// 获取当前节点信息【数据库】
+			StageInfoEntity stageInfo = stageInfoDaoImpl.selectStageInfo(flowInsId);
+			if (stageInfo == null) {
+				logger.error("未获取到节点信息,流程实例id:{}", flowInsId);
+				return;
+			}
+
+			// 根据流程名和节点名查询路由信息【配置文件】
+			StageInfoBean stage =
+					FlowManager
+							.getRoutersByStageName(stageInfo.getFlowName(), stageInfo.getStageName());
+			if (stage == null) {
+				logger.error("查询路由失败,流程名:{},节点名:{}", stageInfo.getFlowName(), stageInfo.getStageName());
+				return;
+			}
+
+			// 从配置节点信息中获取路由信息【配置文件】
+			List<RouterInfoBean> routers = new ArrayList<RouterInfoBean>();
+			if (StringUtils.isEmpty(datalName)) {
+				// stageRouters = stage.getToStage();
+			} else {
+				routers = stage.getListRouter();
+			}
+
+			if (CollectionUtils.isEmpty(routers)) {
+				logger.error("流程的路由不能为空,流程名:{}", stageInfo.getFlowName());
+				return;
+			}
+
+			// 遍历当前节点的所有路由
+			for (RouterInfoBean routerInfoBean : routers) {
+
+				if (!RulesManager.parseRule(routerInfoBean, flowInsId)) {
+					continue;
+				}
+
+				// 匹配其中一条路由时,触发事件和
+				String eventName = routerInfoBean.getEventName();
+				if (!handler(flowInsId, eventName, isSync)) {
+					logger.info("触发事件失败,流程实例:{},事件名:{}", flowInsId, eventName);
+					continue;
+				}
+
+				boolean toNextResult = toNextStage(stage.getName(), routerInfoBean, stageInfo);
+				if (toNextResult) {
+			        break;
+			    }
+			}
+		} catch (Exception e) {
+			logger.error("驱动到下一节点时出错",e);
 		}
+	}
 
-		// 获取当前节点信息【数据库】
-		StageInfoEntity stageInfo = stageInfoDaoImpl.selectStageInfo(flowInsId);
-		if (stageInfo == null) {
-			logger.error("未获取到节点信息,流程实例id:{}", flowInsId);
-			return;
-		}
+	private boolean handler(String flowInsId, String eventName, boolean isSync) {
+		return true;
+		// EventBus.getInstance().post(baseEvent,isSync);
+	}
 
-		// 根据流程名和节点名查询路由信息【配置文件】
-		StageInfoBean stage =
-				FlowManager
-						.getRoutersByStageName(stageInfo.getFlowName(), stageInfo.getStageName());
-		if (stage == null) {
-			logger.error("查询路由失败,流程名:{},节点名:{}", stageInfo.getFlowName(), stageInfo.getStageName());
-			return;
-		}
+	private boolean toNextStage(String flowName, RouterInfoBean routerBean,
+			StageInfoEntity stageInfo) {
 
-		// 从配置节点信息中获取路由信息【配置文件】
-		List<RouterInfoBean> routers = new ArrayList<RouterInfoBean>();
-		if (StringUtils.isEmpty(datalName)) {
-			// stageRouters = stage.getToStage();
+		StageInfoEntity nextStageInfo = new StageInfoEntity();
+		nextStageInfo.setFlowName(flowName);
+		nextStageInfo.setFlowInsId(stageInfo.getFlowInsId());
+		nextStageInfo.setStageName(routerBean.getToStage());
+
+		if (END_STAGE.equalsIgnoreCase(routerBean.getToStage())) {
+			nextStageInfo.setStageStatus(STAGE_STATUS_END);
 		} else {
-			routers = stage.getListRouter();
+			nextStageInfo.setStageStatus(STAGE_STATUS_RUNNING);
+		}
+		stageInfo.setStageStatus(STAGE_STATUS_END);
+
+		try {
+			Integer updateCurnt = stageInfoDaoImpl.updateStageInfo(stageInfo);
+			Integer updateNext = stageInfoDaoImpl.insertStageInfo(nextStageInfo);
+			if (updateCurnt != 1 || updateNext != 1) {
+				logger.error("更新节点信息出错,stageInfo:\n" + stageInfo);
+				logger.error("更新次节点信息出错,nextStageInfo:\n" + nextStageInfo);
+				return false;
+			}
+			logger.info("成功更新节点信息!");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
-		if (CollectionUtils.isEmpty(routers)) {
-			logger.error("流程的路由不能为空,流程名:{}", stageInfo.getFlowName());
-			return;
-		}
-		
-		// 遍历当前节点的所有路由
-		for (RouterInfoBean routerInfoBean : routers) {
-			RulesManager.parseRule(routerInfoBean, flowInsId);
-		}
-	}
-	public static StageInfoBean toNextStage(String flowName) {
-		return null;
-
+		return true;
 	}
 
 	public static StageInfoBean getCurrentStageInfo(String flowInsId) {
 		return null;
-
 	}
 }

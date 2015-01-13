@@ -1,6 +1,7 @@
 package com.suning.app.mwwf.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 public class StageInfoEntity implements Serializable {
 
@@ -23,10 +24,10 @@ public class StageInfoEntity implements Serializable {
 	private String stageStatus;
 
 	/* 流程节点创建时间 */
-	private String createTime;
+	private Timestamp createTime;
 
 	/* 流程节点更新时间 */
-	private String updateTime;
+	private Timestamp updateTime;
 
 	/* 流程节点有效性 1：有效 2.无效 */
 	private String del;
@@ -43,7 +44,7 @@ public class StageInfoEntity implements Serializable {
 		return flowInsId;
 	}
 
-	public void setFlowId(String flowInsId) {
+	public void setFlowInsId(String flowInsId) {
 		this.flowInsId = flowInsId;
 	}
 
@@ -71,19 +72,19 @@ public class StageInfoEntity implements Serializable {
 		this.stageStatus = stageStatus;
 	}
 
-	public String getCreateTime() {
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
-	public String getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
 
-	public void setUpdateTime(String updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
 
@@ -93,6 +94,20 @@ public class StageInfoEntity implements Serializable {
 
 	public void setDel(String del) {
 		this.del = del;
+	}
+
+	@Override
+	public String toString() {
+
+		StringBuffer result = new StringBuffer();
+		result.append("flowInsId:" + flowInsId).append("\n");
+		result.append("flowName:" + flowName).append("\n");
+		result.append("stageName:" + stageName).append("\n");
+		result.append("stageStatus:" + stageStatus).append("\n");
+		result.append("createTime:" + createTime).append("\n");
+		result.append("updateTime:" + updateTime).append("\n");
+		
+		return result.toString();
 	}
 
 }

@@ -4,7 +4,10 @@ import java.util.List;
 
 public class RuleBean extends BaseBean {
 
+	/* 从rule.properties解析出来的表达式 */
 	private String expression;
+
+	/* 从rule.properties解析出来业务数据名 */
 	private List<String> conditionDataNames;
 
 	public String getExpression() {

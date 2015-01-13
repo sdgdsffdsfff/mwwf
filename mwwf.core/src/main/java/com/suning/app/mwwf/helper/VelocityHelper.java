@@ -41,12 +41,22 @@ public class VelocityHelper {
 		return context;
 	}
 
-	public static boolean validate(List<BizDataAbstract<?>> bizData, String expression,
+	public static boolean validate(List<BizDataAbstract<?>> bizDatas, String expression,
 			String flowInsId) {
 
 		try {
-			VelocityContext context = initCtx(bizData, flowInsId);
+
+			// velocity从业务上下文获取
+			VelocityContext context = initCtx(bizDatas, flowInsId);
+
+			if(context == null) {
+				throw new Exception("获取上下文失败!");
+			}
+			
+			// 存储解析返回内容
 			StringWriter writer = new StringWriter();
+
+			// 开始解析
 			boolean excuteFlg = velocityEngine.evaluate(context, writer, "SEngine", expression);
 			if (excuteFlg && VALIDATE_RESULT_TRUE.equals(String.valueOf(writer))) {
 				return true;
@@ -56,6 +66,8 @@ public class VelocityHelper {
 		} catch (MethodInvocationException e) {
 			logger.error("规则模板解析出错,流程实例为:{},规则名为:{}", new String[] { flowInsId, expression }, e);
 		} catch (ResourceNotFoundException e) {
+			logger.error("规则模板解析出错,流程实例为:{},规则名为:{}", new String[] { flowInsId, expression }, e);
+		} catch (Exception e) {
 			logger.error("规则模板解析出错,流程实例为:{},规则名为:{}", new String[] { flowInsId, expression }, e);
 		}
 		return false;

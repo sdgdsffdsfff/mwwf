@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
-import com.suning.app.mwwf.exception.WfEngineException;
 import com.suning.app.mwwf.helper.xml.FlowSaxHandler;
 
 public class StreamHelper {
@@ -25,15 +24,25 @@ public class StreamHelper {
 	 * @return 资源的流
 	 */
 	public static InputStream getStreamFromClasspath(String resourceName) {
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		InputStream stream = classLoader.getResourceAsStream(resourceName);
+		InputStream stream = null;
+		try {
+			ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+			stream = classLoader.getResourceAsStream(resourceName);
 
-		if (stream == null) {
-			stream = StreamHelper.class.getClassLoader().getResourceAsStream(resourceName);
-		}
+			if (stream == null) {
+				stream = StreamHelper.class.getClassLoader().getResourceAsStream(resourceName);
+			}
 
-		if (stream == null) {
-			throw new WfEngineException("resource " + resourceName + " does not exist");
+			if (stream == null) {
+				throw new Exception("resource " + resourceName + " does not exist");
+			}
+
+			logger.info("加载资源文件成功:{}",resourceName);
+			
+		} catch (SecurityException  e) {
+			logger.error("未能获取上下文的ClassLoader",e);
+		} catch (Exception e) {
+			logger.error("加载资源文件成功:{}",resourceName,e);
 		}
 		return stream;
 	}

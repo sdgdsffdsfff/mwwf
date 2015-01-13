@@ -1,11 +1,5 @@
 package com.suning.app.mwwf.dao;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-
 import com.suning.app.mwwf.entity.StageInfoEntity;
 
 public interface StageInfoDao {
@@ -13,19 +7,19 @@ public interface StageInfoDao {
 	/**
 	 * 更新流程引擎stage_info表
 	 */
-	@Update("UPDATE `mwwf`.`stage_info` SET `id`=NULL, `flowId`=NULL, `flowName`=NULL, `stageName`=NULL, `stageStatus`=NULL, `createTime`=NULL, `updateTime`=NULL, `del`=NULL WHERE (ISNULL(`id`));")
+	//@Update("UPDATE `mwwf`.`stage_info` SET `id`=NULL, `flowInsId`=NULL, `flowName`=NULL, `stageName`=NULL, `stageStatus`=NULL, `createTime`=NULL, `updateTime`=NULL, `del`=NULL WHERE (ISNULL(`id`));")
 	public Integer updateStageInfo(StageInfoEntity stageInfoEntity);
 
 	/**
 	 * 插入流程引擎stage_info表
 	 */
-	@Insert("INSERT INTO `stage_info` (`flowId`, `flowName`, `stageName`, `stageStatus`, `createTime`) VALUES (#{flowId}, #{flowName}, #{stageName}, #{stageStatus}, now())")
+	//@Insert("INSERT INTO `stage_info` (`flowInsId`, `flowName`, `stageName`, `stageStatus`, `createTime`) VALUES (#{flowInsId}, #{flowName}, #{stageName}, #{stageStatus}, now())")
 	public Integer insertStageInfo(StageInfoEntity stageInfoEntity);
 	
 	/**
 	 * 查询流程引擎stage_info表
 	 */
-	@Select("SELECT * FROM `stage_info` WHERE flowId = #{flowId} ORDER BY DESC LIMIT 1")
+	//@Select("SELECT * FROM `stage_info` WHERE flowInsId = #{flowInsId} ORDER BY DESC LIMIT 1")
 	public StageInfoEntity selectStageInfo(String flowInsId);
 	
 }

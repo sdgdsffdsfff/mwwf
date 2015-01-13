@@ -15,10 +15,6 @@ public class FlowManager {
 
 	private static CopyOnWriteArrayList<NodeInfo<?>> flowXmlEnity = new CopyOnWriteArrayList<NodeInfo<?>>();
 
-	static {
-		init();
-	}
-
 	public static void init() {
 		StreamHelper.parseFlowXml("flows.xml");
 	}

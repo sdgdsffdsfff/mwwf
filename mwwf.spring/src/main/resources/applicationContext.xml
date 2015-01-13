@@ -33,7 +33,7 @@
 		<property name="password" value="${jdbc.password}" />
 	</bean>
 
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<!-- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	<bean id="transactionManager"
@@ -45,6 +45,25 @@
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 	
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+        <property name="sqlSessionFactory"  ref="sqlSessionFactory"/>  
+        <property name="basePackage" value="org.denger.mapper"></property>  
+    </bean> 
+	 -->
+	 <bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="transactionTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="flow-ibatis.xml" />
+	</bean>
+
 	<bean class="com.suning.app.mwwf.spring.SpringWfEngine" id="engine">
 	</bean>
 </beans>
