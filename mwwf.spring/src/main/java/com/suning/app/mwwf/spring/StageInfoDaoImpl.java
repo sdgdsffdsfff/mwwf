@@ -2,8 +2,7 @@ package com.suning.app.mwwf.spring;
 
 import java.sql.SQLException;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -13,7 +12,7 @@ import com.suning.app.mwwf.entity.StageInfoEntity;
 @Repository
 public class StageInfoDaoImpl implements StageInfoDao {
 
-	@Resource(name = "sqlMapClient")
+	@Autowired
 	private SqlMapClient sqlMapClient;
 	
 	@Override
@@ -33,7 +32,7 @@ public class StageInfoDaoImpl implements StageInfoDao {
 		//StageInfoDao stageInfoDao = sqlSession.getMapper(StageInfoDao.class);
 		StageInfoEntity stageInfo = null;
 		try {
-			stageInfo = (StageInfoEntity) sqlMapClient.queryForObject("stageInfo.selectStageInfo",flowInsId,StageInfoEntity.class);
+			stageInfo = (StageInfoEntity) sqlMapClient.queryForObject("selectStageInfo",flowInsId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

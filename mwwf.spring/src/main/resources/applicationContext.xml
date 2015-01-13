@@ -60,8 +60,8 @@
 	</bean>
 
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap.xml" />
 		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="flow-ibatis.xml" />
 	</bean>
 
 	<bean class="com.suning.app.mwwf.spring.SpringWfEngine" id="engine">

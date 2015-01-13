@@ -34,7 +34,14 @@ public class FlowManager {
 	public static StageInfoBean getRoutersByStageName(String flowName,String stageName) {
 		
 		NodePoint flowNode = DomTree.getNodeByName(flowName);
-		List<NodePoint> child= DomTree.getNodeByName(flowNode,stageName).getChildList();
+		
+		NodePoint stageNode = DomTree.getNodeByName(flowNode,stageName);
+		
+		if(stageNode == null ) {
+			return null;
+		}
+		
+		List<NodePoint> child= stageNode.getChildList();
 		List<RouterInfoBean> routers = new ArrayList<RouterInfoBean>();
 		for (NodePoint routerInfoBean : child) {
 			routers.add((RouterInfoBean)routerInfoBean.getCurrentNodeInfo().getNodeInfo());
