@@ -50,26 +50,26 @@ public class SpringWfEngine extends AbstractWfEngine {
 	 * @see com.suning.app.mwwf.core.impl.AbstractWfEngine#startFlowInstance(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public boolean startFlowInstance(String flowInsId, String flowName) {
+	public Integer startFlowInstance(String flowInsId, String flowName) {
 
 		try {
 			// 验证连接可用性
 			if (stageInfoDaoImpl == null) {
 				logger.error("连接数据库失败!");
-				return false;
+				return 0;
 			}
 
 			// 参数数验证
 			if (StringUtils.isBlank(flowInsId) || StringUtils.isBlank(flowName)) {
 				logger.error("启动流程实例失败,流程实例id:{},流程名称:{}", flowInsId, flowName);
-				return false;
+				return Constant.NUM_0;
 			}
 
 			// 验证是否已经启动了流程实例
 			StageInfoEntity stageInfoList = stageInfoDaoImpl.selectStageInfo(flowInsId);
 			if (stageInfoList != null) {
 				logger.error("流程实例已经存在,流程实例id:{}", flowInsId);
-				return false;
+				return Constant.NUM_0;
 			}
 
 			// 插入节点信息
@@ -78,18 +78,18 @@ public class SpringWfEngine extends AbstractWfEngine {
 			stageInfo.setFlowName(flowName);
 			stageInfo.setStageName(Constant.START_STAGE);
 			stageInfo.setStageStatus(String.valueOf(StageStatusEnum.RUNNING));
-			Integer affectRows = stageInfoDaoImpl.insertStageInfo(stageInfo);
-			if (affectRows == Constant.NUM_0) {
+			Integer bizKey = stageInfoDaoImpl.insertStageInfo(stageInfo);
+			if (bizKey == Constant.NUM_0) {
 				logger.error("流程实例存储失败,流程实例id:{}", flowInsId);
-				return false;
+				return Constant.NUM_0;
 			}
 
 			logger.info("流程实例成功启动,流程实例id:{}", flowInsId);
-			return true;
+			return bizKey;
 		} catch (Exception e) {
 			logger.error("流程实例启动失败,流程实例id:{}", flowInsId,e);
 		}
-		return false;
+		return Constant.NUM_0;
 	}
 
 	@Override

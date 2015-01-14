@@ -11,6 +11,7 @@
     </select>
     <insert id="insertKafkaFlowStage" parameterClass="com.suning.app.mwwf.spring.KafkaFlowStageEntity">
         INSERT INTO `kafka_flow_stage` (
+        	`id`,
 			`flowInsId`,
 			`applicantId`,
 			`approverId`,
@@ -20,12 +21,13 @@
 		)
 		VALUES
 			(
+				#id#,
 				#flowInsId#,
 				#applicantId#,
 				#approverId#,
 				#remark#,
 				#action#,
-				#createTime#
+				now()
 			)
 		<selectKey resultClass="Integer"  keyProperty="id" >    
              SELECT last_insert_id() as id;   

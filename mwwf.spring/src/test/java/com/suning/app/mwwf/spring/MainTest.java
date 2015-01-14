@@ -12,6 +12,7 @@ public class MainTest {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(paths);
 		SpringWfEngine a = (SpringWfEngine)ctx.getBean("engine");
 		KafkaBizData b = (KafkaBizData)ctx.getBean("kafkaBizData");
-		a.triggerByInsId("3838cf80-d562-4df7-ac2a-bb5eeb02f4ed", "kafka", false);
-	}
+		//a.triggerByInsId("3838cf80-d562-4df7-ac2a-bb5eeb02f4ed", "kafka", false);
+		System.out.println(a.startFlowInstance("3838cf80", "kafka"));
+    }
 }

@@ -33,4 +33,17 @@ public class KafkaBizData extends BizDataAbstract<KafkaFlowStageEntity>{
 	public String getName() {
 		return "kafka";
 	}
+
+	@Override
+    public boolean set(KafkaFlowStageEntity bizEntity) {
+		try {
+	        Integer key = (Integer) sqlMapClient.insert("insertKafkaFlowStage", bizEntity);
+	        if(key == null) {
+	        	return false;
+	        }
+        } catch (SQLException e) {
+	        e.printStackTrace();
+        }
+	    return true;
+    }
 }

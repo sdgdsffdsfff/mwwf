@@ -16,7 +16,7 @@ public abstract class AbstractWfEngine {
 	 * @param flowName 流程名
 	 * @return 如果成功启动实例则返回{@code true},否则返回{@code false}
 	 */
-	public abstract boolean startFlowInstance(String flowInsId, String flowName);
+	public abstract Integer startFlowInstance(String flowInsId, String flowName);
 
 	/**
 	 * <p>

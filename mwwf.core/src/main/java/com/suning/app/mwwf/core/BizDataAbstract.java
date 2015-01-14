@@ -27,4 +27,12 @@ public abstract class BizDataAbstract<T> {
 	 * @return 获取业务数据
 	 */
 	public abstract T get(String id);
+	
+	/**
+	 * 用流程引擎放回的主键,去构建业务数据
+	 * 
+	 * @param id 外键
+	 * @return 插入业务数据是否成功
+	 */
+	public abstract boolean set(T bizEntity);
 }
