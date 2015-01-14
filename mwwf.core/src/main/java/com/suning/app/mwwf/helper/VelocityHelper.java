@@ -27,7 +27,7 @@ public class VelocityHelper {
 
 	private static final String VALIDATE_RESULT_TRUE = "true";
 
-	private static VelocityContext initCtx(List<BizDataAbstract<?>> bizData, String flowInsId) {
+	private static VelocityContext initCtx(List<BizDataAbstract<?>> bizData, String keyId) {
 
 		VelocityContext context = new VelocityContext();
 
@@ -36,18 +36,18 @@ public class VelocityHelper {
 		}
 
 		for (BizDataAbstract<?> data : bizData) {
-			context.put(data.getName(), data.get(flowInsId));
+			context.put(data.getName(), data.get(keyId));
 		}
 		return context;
 	}
 
 	public static boolean validate(List<BizDataAbstract<?>> bizDatas, String expression,
-			String flowInsId) {
+			String keyId) {
 
 		try {
 
 			// velocity从业务上下文获取
-			VelocityContext context = initCtx(bizDatas, flowInsId);
+			VelocityContext context = initCtx(bizDatas, keyId);
 
 			if(context == null) {
 				throw new Exception("获取上下文失败!");
@@ -58,17 +58,17 @@ public class VelocityHelper {
 
 			// 开始解析
 			boolean excuteFlg = velocityEngine.evaluate(context, writer, "SEngine", expression);
-			if (excuteFlg && VALIDATE_RESULT_TRUE.equals(String.valueOf(writer))) {
+			if (excuteFlg && VALIDATE_RESULT_TRUE.equalsIgnoreCase(String.valueOf(writer).trim())) {
 				return true;
 			}
 		} catch (ParseErrorException e) {
-			logger.error("规则模板解析出错,流程实例为:{},规则名为:{}", new String[] { flowInsId, expression }, e);
+			logger.error("规则模板解析出错,外键为:{},规则名为:{}", new String[] { keyId, expression }, e);
 		} catch (MethodInvocationException e) {
-			logger.error("规则模板解析出错,流程实例为:{},规则名为:{}", new String[] { flowInsId, expression }, e);
+			logger.error("规则模板解析出错,外键为:{},规则名为:{}", new String[] { keyId, expression }, e);
 		} catch (ResourceNotFoundException e) {
-			logger.error("规则模板解析出错,流程实例为:{},规则名为:{}", new String[] { flowInsId, expression }, e);
+			logger.error("规则模板解析出错,外键为:{},规则名为:{}", new String[] { keyId, expression }, e);
 		} catch (Exception e) {
-			logger.error("规则模板解析出错,流程实例为:{},规则名为:{}", new String[] { flowInsId, expression }, e);
+			logger.error("规则模板解析出错,外键为:{},规则名为:{}", new String[] { keyId, expression }, e);
 		}
 		return false;
 	}

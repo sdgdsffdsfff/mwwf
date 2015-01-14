@@ -9,7 +9,14 @@ public abstract class AbstractWfEngine {
 
 	private static RulesManager routerManager = RulesManager.getRouterManagerIns();
 
-	public abstract boolean startFlowInstance(String flowInstanceId, String flowName);
+	/**
+	 * 第一次创建节点时,生成整套流程实例唯一id,用来识别某次申请流程
+	 * 
+	 * @param flowInsId 流程实例唯一id
+	 * @param flowName 流程名
+	 * @return 如果成功启动实例则返回{@code true},否则返回{@code false}
+	 */
+	public abstract boolean startFlowInstance(String flowInsId, String flowName);
 
 	/**
 	 * <p>

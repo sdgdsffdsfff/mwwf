@@ -20,7 +20,7 @@ import com.suning.app.mwwf.enums.StageStatusEnum;
 
 public class SpringWfEngine extends AbstractWfEngine {
 
-	private static final Logger logger = LoggerFactory.getLogger(AbstractWfEngine.class);
+	private static final Logger logger = LoggerFactory.getLogger(SpringWfEngine.class);
 
 	/* 节点结束标识符 */
 	private static final String END_STAGE = "endStage";
@@ -46,42 +46,50 @@ public class SpringWfEngine extends AbstractWfEngine {
 		RulesManager.init();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.suning.app.mwwf.core.impl.AbstractWfEngine#startFlowInstance(java.lang.String, java.lang.String)
+	 */
 	@Override
-	public boolean startFlowInstance(String flowInsId, String flowInsName) {
+	public boolean startFlowInstance(String flowInsId, String flowName) {
 
-		// 验证连接可用性
-		if (stageInfoDaoImpl == null) {
-			logger.error("连接数据库失败!");
-			return false;
+		try {
+			// 验证连接可用性
+			if (stageInfoDaoImpl == null) {
+				logger.error("连接数据库失败!");
+				return false;
+			}
+
+			// 参数数验证
+			if (StringUtils.isBlank(flowInsId) || StringUtils.isBlank(flowName)) {
+				logger.error("启动流程实例失败,流程实例id:{},流程名称:{}", flowInsId, flowName);
+				return false;
+			}
+
+			// 验证是否已经启动了流程实例
+			StageInfoEntity stageInfoList = stageInfoDaoImpl.selectStageInfo(flowInsId);
+			if (stageInfoList != null) {
+				logger.error("流程实例已经存在,流程实例id:{}", flowInsId);
+				return false;
+			}
+
+			// 插入节点信息
+			StageInfoEntity stageInfo = new StageInfoEntity();
+			stageInfo.setFlowInsId(flowInsId);
+			stageInfo.setFlowName(flowName);
+			stageInfo.setStageName(Constant.START_STAGE);
+			stageInfo.setStageStatus(String.valueOf(StageStatusEnum.RUNNING));
+			Integer affectRows = stageInfoDaoImpl.insertStageInfo(stageInfo);
+			if (affectRows == Constant.NUM_0) {
+				logger.error("流程实例存储失败,流程实例id:{}", flowInsId);
+				return false;
+			}
+
+			logger.info("流程实例成功启动,流程实例id:{}", flowInsId);
+			return true;
+		} catch (Exception e) {
+			logger.error("流程实例启动失败,流程实例id:{}", flowInsId,e);
 		}
-
-		// 参数数验证
-		if (StringUtils.isBlank(flowInsId) || StringUtils.isBlank(flowInsName)) {
-			logger.error("启动流程实例失败,流程实例id:{},流程名称:{}", flowInsId, flowInsName);
-			return false;
-		}
-
-		// 验证是否已经启动了流程实例
-		StageInfoEntity stageInfoList = stageInfoDaoImpl.selectStageInfo(flowInsId);
-		if (stageInfoList != null) {
-			logger.error("流程实例已经存在,流程实例id:{}", flowInsId);
-			return false;
-		}
-
-		// 插入节点信息
-		StageInfoEntity stageInfo = new StageInfoEntity();
-		stageInfo.setFlowInsId(flowInsId);
-		stageInfo.setFlowName(flowInsName);
-		stageInfo.setStageName(Constant.START_STAGE);
-		stageInfo.setStageStatus(String.valueOf(StageStatusEnum.RUNNING));
-		Integer affectRows = stageInfoDaoImpl.insertStageInfo(stageInfo);
-		if (affectRows != Constant.NUM_1) {
-			logger.error("流程实例存储失败,流程实例id:{}", flowInsId);
-			return false;
-		}
-
-		logger.info("流程实例成功启动,流程实例id:{}", flowInsId);
-		return true;
+		return false;
 	}
 
 	@Override
@@ -134,7 +142,7 @@ public class SpringWfEngine extends AbstractWfEngine {
 			// 遍历当前节点的所有路由
 			for (RouterInfoBean routerInfoBean : routers) {
 
-				if (!RulesManager.parseRule(routerInfoBean, flowInsId)) {
+				if (!RulesManager.parseRule(routerInfoBean, String.valueOf(stageInfo.getId()))) {
 					continue;
 				}
 

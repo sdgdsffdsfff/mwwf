@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="kafkaFlowStage">
+	<select id="selectKafkaFlowStage" resultClass="com.suning.app.mwwf.spring.KafkaFlowStageEntity" parameterClass="String">
+        SELECT
+			*
+		FROM
+			`kafka_flow_stage`
+		WHERE
+			id = #id#
+    </select>
+    <insert id="insertKafkaFlowStage" parameterClass="com.suning.app.mwwf.spring.KafkaFlowStageEntity">
+        INSERT INTO `kafka_flow_stage` (
+			`flowInsId`,
+			`applicantId`,
+			`approverId`,
+			`remark`,
+			`action`,
+			`createTime`
+		)
+		VALUES
+			(
+				#flowInsId#,
+				#applicantId#,
+				#approverId#,
+				#remark#,
+				#action#,
+				#createTime#
+			)
+		<selectKey resultClass="Integer"  keyProperty="id" >    
+             SELECT last_insert_id() as id;   
+        </selectKey>
+    </insert>
+    <update id="updateKafkaFlowStage">
+		UPDATE `kafka_flow_stage`
+		SET
+		<isNotEmpty property="remark">
+			`remark` = #remark#,
+		</isNotEmpty>
+		<isNotEmpty property="stageName">
+			`action` = #action#,
+		</isNotEmpty>
+		<isNotEmpty property="updateTime">
+			`updateTime` = #updateTime#,
+		</isNotEmpty>
+		<isNotEmpty property="del">
+			`del` = #del#,
+		</isNotEmpty>
+		 `updateTime` = now()
+		WHERE
+			flowInsId = #flowInsId#
+		AND applicantId = #applicantId#
+    </update>
+</sqlMap>

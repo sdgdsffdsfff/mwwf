@@ -64,6 +64,7 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean class="com.suning.app.mwwf.spring.SpringWfEngine" id="engine">
+	<bean class="com.suning.app.mwwf.spring.SpringWfEngine" id="engine"></bean>
+	<bean class="com.suning.app.mwwf.spring.KafkaBizData" id="kafkaBizData">
 	</bean>
 </beans>

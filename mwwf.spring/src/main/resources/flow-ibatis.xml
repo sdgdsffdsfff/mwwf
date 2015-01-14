@@ -11,4 +11,32 @@
 			flowInsId = #{flowInsId}#
 		LIMIT 1
     </select>
+    <insert id="insertStageInfo" parameterClass="com.suning.app.mwwf.entity.StageInfoEntity">
+    	INSERT INTO `stage_info` (
+			`flowInsId`,
+			`flowName`,
+			`stageName`,
+			`stageStatus`,
+			`createTime`
+		)
+		VALUES
+			(
+				#flowInsId#, 
+				#flowName#, 
+				#stageName#, 
+				#stageStatus#, 
+				now()
+			)
+		<selectKey resultClass="Integer"  keyProperty="id" >    
+             SELECT last_insert_id() as id;   
+        </selectKey>
+    </insert>
+    <update id="updateStageInfo" parameterClass="com.suning.app.mwwf.entity.StageInfoEntity">
+		UPDATE stage_info
+		SET
+			`stageStatus` = #stageStatus#,
+			`updateTime` = now()
+		WHERE
+			flowInsId = #flowInsId#   
+    </update>
 </sqlMap> 
