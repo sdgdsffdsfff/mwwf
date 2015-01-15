@@ -5,11 +5,15 @@
 	<flow name="kafka" autoTrigger="true">
 		<stage name="startStage" toStage="secondStage">
 			<router name="agree" eventName="B" toStage="secondStage"/>
+			<router name="isLeader" eventName="B" toStage="endStage"/>
 		</stage>
 		<stage name="secondStage">
 			<router name="agree" eventName="B" toStage="endStage"/>
 			<router name="refuse" eventName="B" toStage="startStage"/>
 		</stage>
-		<stage name="endStage"/>
+		<stage name="endStage">
+			 <router name="agree" eventName="B" toStage="FINISHED"></router>
+			 <router name="refuse" eventName="B"></router>
+		</stage>
 	</flow>
 </flows>

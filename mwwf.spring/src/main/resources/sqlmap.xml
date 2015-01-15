@@ -1,6 +1,6 @@
 <!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">  
 <sqlMapConfig>  
-    <sqlMap resource="flow-ibatis.xml" />  
-    <sqlMap resource="kafka-flow-stage.xml" />
-    <sqlMap resource="kafka-flow.xml" />
+    <sqlMap resource="sqlmap-yengine.xml" />  
+    <sqlMap resource="sqlmap-flow-stage.xml" />
+     <sqlMap resource="sqlmap-flow.xml" />
 </sqlMapConfig>  

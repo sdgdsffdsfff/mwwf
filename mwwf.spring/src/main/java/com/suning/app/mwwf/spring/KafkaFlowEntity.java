@@ -18,6 +18,16 @@ public class KafkaFlowEntity {
 
 	private String repitition;
 
+	private String applicantId;
+
+	private String isLeader;
+
+	private String approverId;
+
+	private String remark;
+
+	private String action;
+
 	private Timestamp createTime;
 
 	private Timestamp updateTime;
@@ -26,6 +36,46 @@ public class KafkaFlowEntity {
 
 	public Integer getId() {
 		return id;
+	}
+
+	public String getApplicantId() {
+		return applicantId;
+	}
+
+	public void setApplicantId(String applicantId) {
+		this.applicantId = applicantId;
+	}
+
+	public String getIsLeader() {
+		return isLeader;
+	}
+
+	public void setIsLeader(String isLeader) {
+		this.isLeader = isLeader;
+	}
+
+	public String getApproverId() {
+		return approverId;
+	}
+
+	public void setApproverId(String approverId) {
+		this.approverId = approverId;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
 	}
 
 	public void setId(Integer id) {

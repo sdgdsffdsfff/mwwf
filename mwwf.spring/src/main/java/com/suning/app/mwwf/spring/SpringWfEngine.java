@@ -23,6 +23,9 @@ public class SpringWfEngine extends AbstractWfEngine {
 	private static final Logger logger = LoggerFactory.getLogger(SpringWfEngine.class);
 
 	/* 节点结束标识符 */
+	private static final String FINISHED = "FINISHED";
+	
+	/* 节点结束标识符 */
 	private static final String END_STAGE = "endStage";
 
 	/* 节点状态:结束 */
@@ -142,7 +145,7 @@ public class SpringWfEngine extends AbstractWfEngine {
 			// 遍历当前节点的所有路由
 			for (RouterInfoBean routerInfoBean : routers) {
 
-				if (!RulesManager.parseRule(routerInfoBean, String.valueOf(stageInfo.getId()))) {
+				if (!RulesManager.parseRule(routerInfoBean, flowInsId)) {
 					continue;
 				}
 
@@ -153,7 +156,7 @@ public class SpringWfEngine extends AbstractWfEngine {
 					continue;
 				}
 
-				boolean toNextResult = toNextStage(stage.getName(), routerInfoBean, stageInfo);
+				boolean toNextResult = toNextStage(stageInfo.getFlowName(), routerInfoBean, stageInfo);
 				if (toNextResult) {
 			        break;
 			    }
@@ -176,22 +179,17 @@ public class SpringWfEngine extends AbstractWfEngine {
 		nextStageInfo.setFlowInsId(stageInfo.getFlowInsId());
 		nextStageInfo.setStageName(routerBean.getToStage());
 
-		if (END_STAGE.equalsIgnoreCase(routerBean.getToStage())) {
-			nextStageInfo.setStageStatus(STAGE_STATUS_END);
+		if (FINISHED.equalsIgnoreCase(routerBean.getToStage())) {
+			nextStageInfo.setStageStatus(FINISHED);
 		} else {
 			nextStageInfo.setStageStatus(STAGE_STATUS_RUNNING);
 		}
 		stageInfo.setStageStatus(STAGE_STATUS_END);
 
 		try {
-			Integer updateCurnt = stageInfoDaoImpl.updateStageInfo(stageInfo);
-			Integer updateNext = stageInfoDaoImpl.insertStageInfo(nextStageInfo);
-			if (updateCurnt != 1 || updateNext != 1) {
-				logger.error("更新节点信息出错,stageInfo:\n" + stageInfo);
-				logger.error("更新次节点信息出错,nextStageInfo:\n" + nextStageInfo);
-				return false;
-			}
-			logger.info("成功更新节点信息!");
+			stageInfoDaoImpl.updateStageInfo(stageInfo);
+			stageInfoDaoImpl.insertStageInfo(nextStageInfo);
+			logger.info("successfully drive from: {} to next stage: {}!",stageInfo.getStageName(),nextStageInfo.getStageName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -199,7 +197,10 @@ public class SpringWfEngine extends AbstractWfEngine {
 		return true;
 	}
 
-	public static StageInfoBean getCurrentStageInfo(String flowInsId) {
-		return null;
+	public abstract class BizDataHelper<T> {
+		abstract List<T> getBizData(String flowInsId);
+	}
+	public static List<?> getCurrentStageInfo(BizDataHelper<?> helper,String flowInsId) {
+		return helper.getBizData(flowInsId);
 	}
 }

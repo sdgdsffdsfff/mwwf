@@ -6,13 +6,14 @@
         SELECT
 			*
 		FROM
-			`stage_info`
+			`yengine`
 		WHERE
 			flowInsId = #{flowInsId}#
-		LIMIT 1
+		order by createTime DESC
+		limit 1
     </select>
     <insert id="insertStageInfo" parameterClass="com.suning.app.mwwf.entity.StageInfoEntity">
-    	INSERT INTO `stage_info` (
+    	INSERT INTO `yengine` (
 			`flowInsId`,
 			`flowName`,
 			`stageName`,
@@ -27,12 +28,9 @@
 				#stageStatus#, 
 				now()
 			)
-		<selectKey resultClass="Integer"  keyProperty="id" >    
-             SELECT last_insert_id() as id;   
-        </selectKey>
     </insert>
     <update id="updateStageInfo" parameterClass="com.suning.app.mwwf.entity.StageInfoEntity">
-		UPDATE stage_info
+		UPDATE yengine
 		SET
 			`stageStatus` = #stageStatus#,
 			`updateTime` = now()

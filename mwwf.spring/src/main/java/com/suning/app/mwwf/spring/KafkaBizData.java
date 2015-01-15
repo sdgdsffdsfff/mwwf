@@ -9,7 +9,7 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 import com.suning.app.mwwf.core.BizDataAbstract;
 
 @Repository
-public class KafkaBizData extends BizDataAbstract<KafkaFlowStageEntity>{
+public class KafkaBizData extends BizDataAbstract<KafkaFlowEntity>{
 	
 	@Autowired
 	SqlMapClient sqlMapClient;
@@ -18,11 +18,11 @@ public class KafkaBizData extends BizDataAbstract<KafkaFlowStageEntity>{
 	 * @see com.suning.app.mwwf.core.BizDataAbstract#get(java.lang.String)
 	 */
 	@Override
-	public KafkaFlowStageEntity get(String id) {
+	public KafkaFlowEntity get(String id) {
 		
-		KafkaFlowStageEntity kafkaFlowStageEntity = null;
+		KafkaFlowEntity kafkaFlowStageEntity = null;
 		try {
-			kafkaFlowStageEntity = (KafkaFlowStageEntity) sqlMapClient.queryForObject("selectKafkaFlowStage",id);
+			kafkaFlowStageEntity = (KafkaFlowEntity) sqlMapClient.queryForObject("selectKafkaFlowStage",id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -34,10 +34,21 @@ public class KafkaBizData extends BizDataAbstract<KafkaFlowStageEntity>{
 		return "kafka";
 	}
 
-	@Override
-    public boolean set(KafkaFlowStageEntity bizEntity) {
+    public boolean insertKafkaFlowStage(KafkaFlowEntity bizEntity) {
 		try {
 	        Integer key = (Integer) sqlMapClient.insert("insertKafkaFlowStage", bizEntity);
+	        if(key == null) {
+	        	return false;
+	        }
+        } catch (SQLException e) {
+	        e.printStackTrace();
+        }
+	    return true;
+    }
+    
+    public boolean insertKafkaFlow(KafkaFlowEntity bizEntity) {
+		try {
+	        Integer key = (Integer) sqlMapClient.insert("insertKafkaFlow", bizEntity);
 	        if(key == null) {
 	        	return false;
 	        }

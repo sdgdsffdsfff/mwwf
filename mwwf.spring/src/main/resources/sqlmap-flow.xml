@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="kafkaFlow">
+	<typeAlias alias="kafkaFlowEntity" type="com.suning.app.mwwf.spring.KafkaFlowEntity"/>
+	<select id="selectKafkaFlow" resultClass="kafkaFlowEntity" parameterClass="String">
+        SELECT
+			*
+		FROM
+			`mwbops_flow`
+		WHERE
+			flowInsId = #flowInsId#
+    </select>
+    <insert id="insertKafkaFlow">
+        INSERT INTO `mwbops_flow` (
+			`flowInsId`,
+			`systemName`,
+			`systemDes`,
+			`topic`,
+			`partition`,
+			`repitition`,
+			`createTime`
+		)
+		VALUES
+			(
+				#flowInsId#,
+				#systemName#,
+				#systemDes#,
+				#topic#,
+				#partition#,
+				#repitition#,
+				now()
+			)
+    </insert>
+</sqlMap>

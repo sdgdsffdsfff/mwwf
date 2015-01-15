@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="kafkaFlowStage">
+	<typeAlias alias="kafkaFlowEntity" type="com.suning.app.mwwf.spring.KafkaFlowEntity"/>
+	<select id="selectKafkaFlowStage" resultClass="kafkaFlowEntity" parameterClass="String">
+        SELECT
+			*
+		FROM
+			`mwbops_flow_stage`
+		WHERE
+			flowInsId = #flowInsId#
+    </select>
+    <select id="selectKafkaFlowStageListByUser" resultClass="kafkaFlowEntity" parameterClass="String">
+        SELECT
+			*
+		FROM
+			`mwbops_flow_stage` mfs,
+			`rengine` re,
+		WHERE
+			flowInsId = #flowInsId#
+		AND	re.flowInsId = mfs.flowInsId
+		AND re.stageStatus = "RUNNING"	
+    </select>
+    <insert id="insertKafkaFlowStage">
+        INSERT INTO `mwbops_flow_stage` (
+			`flowInsId`,
+			`applicantId`,
+			`isLeader`,
+			`approverId`,
+			`remark`,
+			`action`,
+			`createTime`
+		)
+		VALUES
+			(
+				#flowInsId#,
+				#applicantId#,
+				#isLeader#,
+				#approverId#,
+				#remark#,
+				#action#,
+				now()
+			)
+    </insert>
+</sqlMap>
